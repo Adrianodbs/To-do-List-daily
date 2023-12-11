@@ -11,7 +11,7 @@ import {
 import { getCurrentDate } from '../utils/getCurrentDate'
 
 export default function Home() {
-  const { newTask, setNewTask, tasks, setTasks } =
+  const { newTask, setNewTask, tasks, setTasks, taskDone, setTaskDone } =
     useTaskContext() as TaskContextProps
 
   function handleAddTask(event: FormEvent) {
@@ -22,7 +22,8 @@ export default function Home() {
     let newItem = {
       id: uuidv4(),
       title: newTask,
-      date: getCurrentDate()
+      date: getCurrentDate(),
+      isChecked: false
     }
 
     setTasks((allTasks: TaskItemProps[]) => [...allTasks, newItem])
@@ -34,6 +35,17 @@ export default function Home() {
       (task: TaskItemProps) => task.id !== taskId
     )
     setTasks(updatedTasks)
+  }
+
+  function handleTaskDone() {
+    const completedTasks = tasks.filter(task => task.isChecked)
+
+    setTaskDone(prevTaskDone => [...prevTaskDone, ...completedTasks])
+
+    const updatedTasks = tasks.filter(task => !task.isChecked)
+    setTasks(updatedTasks)
+
+    console.log(taskDone)
   }
 
   return (
@@ -58,12 +70,19 @@ export default function Home() {
           {tasks.map(task => (
             <Task
               key={task.id}
+              id={task.id}
               title={task.title}
               onClick={() => handleDelete(task.id)}
               date={task.date}
             />
           ))}
         </div>
+        <button
+          onClick={handleTaskDone}
+          className="bg-violet-700 text-white p-3 mt-3 rounded-lg hover:opacity-80"
+        >
+          Enviar tarefas realizadas
+        </button>
       </div>
     </div>
   )

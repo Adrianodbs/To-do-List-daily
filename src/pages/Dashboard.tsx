@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { TaskContextProps, useTaskContext } from '../contexts/taskContext'
 
 export default function Dashboard() {
-  const { tasks } = useTaskContext() as TaskContextProps
+  const { taskDone } = useTaskContext() as TaskContextProps
   return (
     <div className="w-full flex justify-center items-center min-h-[100vh] bg-violet-700 text-violet-700">
       <div className="flex flex-col justify-start items-center p-4 max-w-4xl w-[90%] min-h-[80vh] bg-white rounded-lg">
@@ -14,7 +14,7 @@ export default function Dashboard() {
             </p>
           </Link>
         </div>
-        {tasks.map(task => (
+        {taskDone.map(task => (
           <p>{task.title}</p>
         ))}
       </div>
