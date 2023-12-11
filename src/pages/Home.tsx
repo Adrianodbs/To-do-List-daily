@@ -1,8 +1,9 @@
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent } from 'react'
 import Form from '../components/Form'
 import Task from '../components/Task'
 import { v4 as uuidv4 } from 'uuid'
 import { Link } from 'react-router-dom'
+import { TaskContextProps, useTaskContext } from '../contexts/taskContext'
 
 interface TaskItemProps {
   id: string
@@ -10,19 +11,8 @@ interface TaskItemProps {
 }
 
 export default function Home() {
-  const [newTask, setNewTask] = useState('')
-  const storedTasks = localStorage.getItem('@tasks-daily')
-  const [tasks, setTasks] = useState<TaskItemProps[]>(
-    storedTasks ? JSON.parse(storedTasks) : []
-  )
-
-  useEffect(() => {
-    storedTasks
-  }, [tasks])
-
-  useEffect(() => {
-    localStorage.setItem('@tasks-daily', JSON.stringify(tasks))
-  }, [tasks])
+  const { newTask, setNewTask, tasks, setTasks } =
+    useTaskContext() as TaskContextProps
 
   function handleAddTask(event: FormEvent) {
     event.preventDefault()
@@ -39,7 +29,9 @@ export default function Home() {
   }
 
   function handleDelete(taskId: string) {
-    const updatedTasks = tasks.filter(task => task.id !== taskId)
+    const updatedTasks = tasks.filter(
+      (task: TaskItemProps) => task.id !== taskId
+    )
     setTasks(updatedTasks)
   }
 
