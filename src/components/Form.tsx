@@ -20,7 +20,7 @@ export default function Input({ onSubmit, value, onChange }: InputProps) {
         value={value}
         onChange={onChange}
       />
-      <button className="text-violet-700]" type="submit">
+      <button className="text-violet-700 hover:-scale-110" type="submit">
         <CiSquarePlus size={32} />
       </button>
     </form>

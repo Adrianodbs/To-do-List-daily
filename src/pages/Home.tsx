@@ -1,7 +1,10 @@
 import { FormEvent, useEffect, useState } from 'react'
 import Form from '../components/Form'
+import Task from '../components/Task'
+import { v4 as uuidv4 } from 'uuid'
 
 interface TaskItemProps {
+  id: string
   title: string
 }
 
@@ -26,12 +29,19 @@ export default function Home() {
     if (newTask === '') return
 
     let newItem = {
+      id: uuidv4(),
       title: newTask
     }
 
     setTasks((allTasks: TaskItemProps[]) => [...allTasks, newItem])
     setNewTask('')
   }
+
+  function handleDelete(taskId: string) {
+    const updatedTasks = tasks.filter(task => task.id !== taskId)
+    setTasks(updatedTasks)
+  }
+
   return (
     <div className="w-full flex justify-center items-center min-h-[100vh] bg-violet-700 text-violet-700">
       <div className="flex flex-col justify-start items-center p-4 max-w-4xl w-[90%] min-h-[80vh] bg-white rounded-lg">
@@ -41,6 +51,16 @@ export default function Home() {
           value={newTask}
           onChange={event => setNewTask(event.target.value)}
         />
+
+        <div className="flex flex-col justify-center items-center w-full gap-3">
+          {tasks.map(task => (
+            <Task
+              key={task.id}
+              title={task.title}
+              onClick={() => handleDelete(task.id)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   )
