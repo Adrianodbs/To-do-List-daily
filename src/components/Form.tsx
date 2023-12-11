@@ -14,7 +14,7 @@ export default function Input({ onSubmit, value, onChange }: InputProps) {
       onSubmit={onSubmit}
     >
       <input
-        className="border-gray-600 border-solid border-[1px] p-1 rounded-md outline-none "
+        className="border-gray-600 border-solid border-[1px] p-1 rounded-md outline-none max-w-[600px] w-full "
         type="text"
         placeholder="Adicione uma nova tarefa"
         value={value}
