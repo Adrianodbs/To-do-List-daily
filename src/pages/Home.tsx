@@ -3,12 +3,11 @@ import Form from '../components/Form'
 import Task from '../components/Task'
 import { v4 as uuidv4 } from 'uuid'
 import { Link } from 'react-router-dom'
-import { TaskContextProps, useTaskContext } from '../contexts/taskContext'
-
-interface TaskItemProps {
-  id: string
-  title: string
-}
+import {
+  TaskContextProps,
+  TaskItemProps,
+  useTaskContext
+} from '../contexts/taskContext'
 
 export default function Home() {
   const { newTask, setNewTask, tasks, setTasks } =

@@ -4,7 +4,7 @@ interface ContextProps {
   children: React.ReactNode
 }
 
-interface TaskItemProps {
+export interface TaskItemProps {
   id: string
   title: string
 }
