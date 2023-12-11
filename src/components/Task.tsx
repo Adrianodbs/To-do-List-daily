@@ -4,17 +4,17 @@ import { TaskContextProps, useTaskContext } from '../contexts/taskContext'
 interface TaskProps {
   id: string
   title: string
-  date: string
+
   onClick: () => void
 }
 
-export default function Task({ id, title, date, onClick }: TaskProps) {
+export default function Task({ id, title, onClick }: TaskProps) {
   const { tasks, setTasks } = useTaskContext() as TaskContextProps
 
   const task = tasks.find(task => task.id === id)
 
   if (!task) {
-    return null // Handle the case when the task is not found
+    return null
   }
 
   const handleCheckboxChange = () => {
@@ -40,7 +40,6 @@ export default function Task({ id, title, date, onClick }: TaskProps) {
         >
           {title}
         </p>
-        <span className="text-violet-500">({date})</span>
       </div>
       <FaTrash className="text-red-500 cursor-pointer" onClick={onClick} />
     </div>

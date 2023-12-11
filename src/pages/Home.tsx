@@ -73,7 +73,6 @@ export default function Home() {
               id={task.id}
               title={task.title}
               onClick={() => handleDelete(task.id)}
-              date={task.date}
             />
           ))}
         </div>
