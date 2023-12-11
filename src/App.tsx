@@ -1,9 +1,12 @@
+import { TaskProvider } from './contexts/taskContext'
 import PageRoute from './routes/PageRoute'
 
 function App() {
   return (
     <div>
-      <PageRoute />
+      <TaskProvider>
+        <PageRoute />
+      </TaskProvider>
     </div>
   )
 }
