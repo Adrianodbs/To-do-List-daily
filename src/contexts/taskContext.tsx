@@ -7,6 +7,7 @@ interface ContextProps {
 export interface TaskItemProps {
   id: string
   title: string
+  date: string
 }
 
 export interface TaskContextProps {

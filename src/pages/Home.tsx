@@ -8,6 +8,7 @@ import {
   TaskItemProps,
   useTaskContext
 } from '../contexts/taskContext'
+import { getCurrentDate } from '../utils/getCurrentDate'
 
 export default function Home() {
   const { newTask, setNewTask, tasks, setTasks } =
@@ -20,7 +21,8 @@ export default function Home() {
 
     let newItem = {
       id: uuidv4(),
-      title: newTask
+      title: newTask,
+      date: getCurrentDate()
     }
 
     setTasks((allTasks: TaskItemProps[]) => [...allTasks, newItem])
@@ -58,6 +60,7 @@ export default function Home() {
               key={task.id}
               title={task.title}
               onClick={() => handleDelete(task.id)}
+              date={task.date}
             />
           ))}
         </div>
