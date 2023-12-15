@@ -5,6 +5,7 @@ import {
   useTaskContext
 } from '../contexts/taskContext'
 import TaskDone from '../components/TaskDone'
+import Rank from '../components/Rank'
 
 export default function Dashboard() {
   const { taskDone, setTaskDone } = useTaskContext() as TaskContextProps
@@ -37,6 +38,8 @@ export default function Dashboard() {
           <p className="text-gray-100 text-sm underline">Volte para a home</p>
         </Link>
       </div>
+
+      <Rank />
 
       {Object.keys(groupedTaskDone).map(date => (
         <div
