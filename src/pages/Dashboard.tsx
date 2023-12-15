@@ -7,6 +7,8 @@ import {
 import TaskDone from '../components/TaskDone'
 import Rank from '../components/Rank'
 
+import { toast } from 'react-toastify'
+
 export default function Dashboard() {
   const { taskDone, setTaskDone } = useTaskContext() as TaskContextProps
 
@@ -26,7 +28,15 @@ export default function Dashboard() {
   const groupedTaskDone = groupByDate(taskDone)
 
   function handleDelete(taskId: string) {
+    const taskToDelete = taskDone.find(
+      (task: TaskItemProps) => task.id === taskId
+    )
+    if (!taskToDelete) {
+      return
+    }
     const updatedTaskDone = taskDone.filter(task => task.id !== taskId)
+
+    toast.success(`A tarefa '${taskToDelete.title}' foi deletada!`)
     setTaskDone(updatedTaskDone)
   }
 
@@ -47,7 +57,7 @@ export default function Dashboard() {
           className="mt-4 w-full flex flex-col justify-center items-center"
         >
           <h3 className="mb-4 font-bold text-[20px]">
-            Tarefas realizadas no dia: {date}
+            Tarefas adicionadas no dia: {date}
           </h3>
           {groupedTaskDone[date].map(task => (
             <TaskDone

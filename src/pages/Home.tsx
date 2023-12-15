@@ -10,8 +10,10 @@ import {
 } from '../contexts/taskContext'
 import { getCurrentDate } from '../utils/getCurrentDate'
 
+import { toast } from 'react-toastify'
+
 export default function Home() {
-  const { newTask, setNewTask, tasks, setTasks, taskDone, setTaskDone } =
+  const { newTask, setNewTask, tasks, setTasks, setTaskDone } =
     useTaskContext() as TaskContextProps
 
   function handleAddTask(event: FormEvent) {
@@ -27,25 +29,41 @@ export default function Home() {
     }
 
     setTasks((allTasks: TaskItemProps[]) => [...allTasks, newItem])
+    toast.success(`A tarefa '${newTask}' foi adicionada com sucesso!`)
     setNewTask('')
   }
 
   function handleDelete(taskId: string) {
+    const taskToDelete = tasks.find((task: TaskItemProps) => task.id === taskId)
+    if (!taskToDelete) {
+      return
+    }
     const updatedTasks = tasks.filter(
       (task: TaskItemProps) => task.id !== taskId
     )
+
+    toast.success(`A tarefa '${taskToDelete.title}' foi deletada!`)
     setTasks(updatedTasks)
   }
 
   function handleTaskDone() {
     const completedTasks = tasks.filter(task => task.isChecked)
 
+    if (completedTasks.length === 0) {
+      toast.warn('Nenhuma tarefa selecionada')
+      return
+    }
+
     setTaskDone(prevTaskDone => [...prevTaskDone, ...completedTasks])
 
     const updatedTasks = tasks.filter(task => !task.isChecked)
     setTasks(updatedTasks)
 
-    console.log(taskDone)
+    if (completedTasks.length === 1) {
+      toast.success(`A tarefa '${completedTasks[0].title}' foi enviada`)
+    } else {
+      toast.success('As tarefas foram enviadas')
+    }
   }
 
   return (
