@@ -76,12 +76,21 @@ export default function Home() {
             />
           ))}
         </div>
-        <button
-          onClick={handleTaskDone}
-          className="bg-violet-700 text-white p-3 mt-3 rounded-lg hover:opacity-80"
-        >
-          Enviar tarefas realizadas
-        </button>
+        {tasks.length > 0 ? (
+          <button
+            onClick={handleTaskDone}
+            className="bg-violet-700 text-white p-3 mt-3 rounded-lg hover:opacity-80"
+          >
+            Enviar tarefas realizadas
+          </button>
+        ) : (
+          <button
+            className="bg-violet-700 text-white p-3 mt-3 rounded-lg opacity-40 cursor-not-allowed"
+            disabled
+          >
+            Sem tarefas adicionadas
+          </button>
+        )}
       </div>
     </div>
   )
