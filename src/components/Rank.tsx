@@ -25,16 +25,16 @@ export default function Rank() {
       } else if (totalScore <= 100) {
         setRank('Prata')
         setImage(Prata)
-      } else if (totalScore <= 150) {
+      } else if (totalScore <= 200) {
         setRank('Ouro')
         setImage(Ouro)
-      } else if (totalScore <= 200) {
+      } else if (totalScore <= 300) {
         setRank('Rubi')
         setImage(Rubi)
-      } else if (totalScore <= 250) {
+      } else if (totalScore <= 450) {
         setRank('Esmeralda')
         setImage(Esmeralda)
-      } else if (totalScore <= 300) {
+      } else if (totalScore <= 600) {
         setRank('Diamante')
         setImage(Diamante)
       } else {
