@@ -11,6 +11,7 @@ import {
 import { getCurrentDate } from '../utils/getCurrentDate'
 
 import { toast } from 'react-toastify'
+import { DragDropContext, Droppable } from '@hello-pangea/dnd'
 
 export default function Home() {
   const { newTask, setNewTask, tasks, setTasks, setTaskDone } =
@@ -66,11 +67,32 @@ export default function Home() {
     }
   }
 
+  function reorder<T>(list: T[], startIndex: number, endIndex: number) {
+    const result = Array.from(list)
+    const [removed] = result.splice(startIndex, 1)
+    result.splice(endIndex, 0, removed)
+
+    return result
+  }
+
+  function onDragEnd(result: any) {
+    if (!result.destination) {
+      return
+    }
+
+    const items = reorder(tasks, result.source.index, result.destination.index)
+
+    setTasks(items)
+  }
+
   return (
     <div className="w-full flex justify-center items-center min-h-[100vh] bg-violet-700 text-violet-700">
       <div className="flex flex-col justify-start items-center p-4 max-w-4xl w-[90%] min-h-[80vh] bg-white rounded-lg">
         <div className="flex flex-col items-center">
           <h2 className="text-[24px] font-bold">Tarefas diárias</h2>
+          <h4 className="text-center font-bold">
+            Arraste as tarefas para coloca-las na ordem de relevância
+          </h4>
           <Link to="/dashboard">
             <p className="text-violet-500 text-sm underline">
               Acesse o dashboard
@@ -84,15 +106,28 @@ export default function Home() {
           onChange={event => setNewTask(event.target.value)}
         />
 
-        <div className="flex flex-col justify-center items-center w-full gap-3">
-          {tasks.map(task => (
-            <Task
-              key={task.id}
-              id={task.id}
-              title={task.title}
-              onClick={() => handleDelete(task.id)}
-            />
-          ))}
+        <div className="w-full">
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="tasks" type="list" direction="vertical">
+              {provided => (
+                <article
+                  className="flex flex-col justify-center items-center w-full gap-3"
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                >
+                  {tasks.map((task, index) => (
+                    <Task
+                      key={task.id}
+                      taskItem={task}
+                      onClick={() => handleDelete(task.id)}
+                      index={index}
+                    />
+                  ))}
+                  {provided.placeholder}
+                </article>
+              )}
+            </Droppable>
+          </DragDropContext>
         </div>
         {tasks.length > 0 ? (
           <button
