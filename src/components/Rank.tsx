@@ -19,22 +19,22 @@ export default function Rank() {
     setTotalScore(taskDone.length * 10)
 
     const newRank = () => {
-      if (totalScore <= 50) {
+      if (totalScore <= 100) {
         setRank('Bronze')
         setImage(Bronze)
-      } else if (totalScore <= 100) {
+      } else if (totalScore <= 200) {
         setRank('Prata')
         setImage(Prata)
-      } else if (totalScore <= 200) {
+      } else if (totalScore <= 400) {
         setRank('Ouro')
         setImage(Ouro)
-      } else if (totalScore <= 300) {
+      } else if (totalScore <= 800) {
         setRank('Rubi')
         setImage(Rubi)
-      } else if (totalScore <= 450) {
+      } else if (totalScore <= 1200) {
         setRank('Esmeralda')
         setImage(Esmeralda)
-      } else if (totalScore <= 600) {
+      } else if (totalScore <= 1600) {
         setRank('Diamante')
         setImage(Diamante)
       } else {
